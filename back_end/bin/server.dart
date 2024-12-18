@@ -12,13 +12,13 @@ void main(List<String> args) async {
       print(req);
       if (req.method == 'OPTIONS') {
         return Response.ok('', headers: {
-          // Cho phép mọi nguồn truy cập (trong môi trường dev). Trong môi trường production chúng ta nên thay * bằng domain cụ thể.
+          // Allow all origins (in dev environment). In production, replace * with specific domain.
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, HEAD',
           'Access-Control-Allow-Headers': 'Content-Type, Authorization',
         });
       }
-      return null; // Tiếp tục xử lý các yêu cầu khác
+      return null; // Continue processing other requests
     },
     responseHandler: (res) {
       print(res);
@@ -31,11 +31,11 @@ void main(List<String> args) async {
   );
   // Configure a pipeline that logs requests.
   final handler = Pipeline()
-      .addMiddleware(corsHeader) // Thêm middleware xử lý CORS
       .addMiddleware(logRequests())
+      .addMiddleware(corsHeader)
       .addHandler(router.call);
   // For running in containers, we respect the PORT environment variable.
   final port = int.parse(Platform.environment['PORT'] ?? '8080');
   final server = await serve(handler, ip, port);
-  print('Server đang chạy tại http://${server.address.host}:${server.port}');
+  print('Server running at http://${server.address.host}:${server.port}');
 }

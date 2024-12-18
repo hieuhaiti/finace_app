@@ -1,23 +1,43 @@
-import 'dart:convert';
-import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
-import 'package:dotenv/dotenv.dart';
+import '../service/user_service.dart';
+import '../service/transactions_service.dart';
+import '../service/category_service.dart';
+import '../service/spending_plan_service.dart';
+import '../service/general_service.dart';
 
-// Load the .env file from the current directory
-var env = DotEnv()..load(['./bin/router/.env']);
+final generalService = GeneralService();
+final userService = UserService();
+final transactionsService = TransactionsService();
+final categoryService = CategoryService();
+final spendingPlanService = SpendingPlanService();
 
-/// Header mặc định cho dữ liệu trả về dưới dạng JSON
-final _headers = (jsonDecode(env['_headers'] ?? '{}') as Map<String, dynamic>)
-    .map((key, value) => MapEntry(key, value.toString()));
+final router = Router(notFoundHandler: generalService.notFoundHandler)
+  // Root endpoint
+  ..get('/', generalService.rootHandler)
 
-final router = Router(notFoundHandler: _notFoundHandler)
-  ..get('/', _rootHandler);
+  // User Routes
+  ..post('/api/v1/users/signup', userService.signUpHandler)
+  ..post('/api/v1/users/signin', userService.signInHandler)
+  ..get('/api/v1/users/<userId>', userService.getUserByIdHandler)
+  ..get('/api/v1/users/username/<username>', userService.getUserByUsernameHandler)
+  ..put('/api/v1/users/<userId>', userService.updateUserHandler)
+  ..delete('/api/v1/users/<userId>', userService.deleteUserHandler)
 
-Response _notFoundHandler(Request req) {
-  return Response.notFound('Không tìm thấy đường dẫn "${req.url}" trên server');
-}
+  // Transactions Routes
+  ..get('/api/v1/transactions/<userId>', transactionsService.getAllTransactionsHandler)
+  ..post('/api/v1/transactions', transactionsService.createTransactionHandler)
+  ..put('/api/v1/transactions/<transactionId>', transactionsService.updateTransactionHandler)
+  ..delete('/api/v1/transactions/<transactionId>', transactionsService.deleteTransactionHandler)
+  ..get('/api/v1/transactions/<userId>/aggregate/<key>', transactionsService.getTransactionsAggregatedBy)
 
-Response _rootHandler(Request req) {
-  final response = jsonEncode({'message': 'Hello world'});
-  return Response.ok(response, headers: _headers);
-}
+  // Spending Plan Routes
+  ..get('/api/v1/spending-plans/<userId>', spendingPlanService.getSpendingPlansHandler)
+  ..post('/api/v1/spending-plans/<userId>', spendingPlanService.updateSpendingPlanHandler)
+  ..delete('/api/v1/spending-plans/<userId>/<category>', spendingPlanService.deleteCategoryHandler)
+
+  // Category Routes
+  ..get('/api/v1/categories/<userId>', categoryService.getCategoriesHandler)
+  ..post('/api/v1/categories', categoryService.saveCategoryHandler)
+  ..get('/api/v1/categories/details/<categoryId>', categoryService.getCategoriesDetailHandler)
+  ..put('/api/v1/categories/<categoryId>', categoryService.updateCategoryHandler)
+  ..delete('/api/v1/categories/<categoryId>', categoryService.deleteCategoryHandler);

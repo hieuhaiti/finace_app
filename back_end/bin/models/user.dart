@@ -11,15 +11,23 @@ class User {
     required this.password,
   }) : id = id ?? Uuid().v4();
 
-  Map<String, dynamic> toJson() => {
+  factory User.fromJson(Map<String, dynamic> json) {
+    if (json['id'] == null ||
+        json['username'] == null ||
+        json['password'] == null) {
+      throw ArgumentError('Missing required fields in User JSON');
+    }
+    return User(
+      id: json['id'],
+      username: json['username'],
+      password: json['password'],
+    );
+  }
+
+
+Map<String, dynamic> toJson() => {
         'id': id,
         'username': username,
         'password': password,
       };
-
-  factory User.fromJson(Map<String, dynamic> json) => User(
-        id: json['id'],
-        username: json['username'],
-        password: json['password'],
-      );
 }

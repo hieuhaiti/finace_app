@@ -9,8 +9,9 @@ dependencies:
   args: ^2.4.0
   shelf: ^1.4.2
   shelf_router: ^1.1.0
-  localstore: ^1.4.0
   dotenv: ^4.2.0
+  uuid: ^3.0.4
+  localstore: ^1.4.0
 
 dev_dependencies:
   http: ^1.1.0
