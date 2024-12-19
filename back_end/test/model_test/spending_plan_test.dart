@@ -10,7 +10,8 @@ void main() {
       );
 
       expect(spendingPlan.userId, equals('user1'));
-      expect(spendingPlan.categories, equals({'saving': 20, 'needs': 50, 'wants': 30}));
+      expect(spendingPlan.categories,
+          equals({'saving': 20, 'needs': 50, 'wants': 30}));
     });
 
     test('SpendingPlan toJson', () {
@@ -21,7 +22,8 @@ void main() {
       final json = spendingPlan.toJson();
 
       expect(json['userId'], equals('user1'));
-      expect(json['categories'], equals({'saving': 20, 'needs': 50, 'wants': 30}));
+      expect(
+          json['categories'], equals({'saving': 20, 'needs': 50, 'wants': 30}));
     });
 
     test('SpendingPlan fromJson', () {
@@ -32,7 +34,8 @@ void main() {
       final spendingPlan = SpendingPlan.fromJson(json);
 
       expect(spendingPlan.userId, equals('user1'));
-      expect(spendingPlan.categories, equals({'saving': 20, 'needs': 50, 'wants': 30}));
+      expect(spendingPlan.categories,
+          equals({'saving': 20, 'needs': 50, 'wants': 30}));
     });
 
     test('SpendingPlan creation with validation', () {

@@ -127,5 +127,31 @@ void main() {
 
       expect(() => Transaction.fromJson(json), throwsArgumentError);
     });
+
+    test('should copy transaction with new values', () {
+      final transaction = Transaction(
+        userId: 'user123',
+        name: 'Groceries',
+        type: 'outcome',
+        spendingPlan: 'needs',
+        category: 'Food',
+        amount: 200.0,
+        date: DateTime.now(),
+      );
+
+      final copiedTransaction = transaction.copyWith(
+        name: 'Updated Groceries',
+        amount: 250.0,
+      );
+
+      expect(copiedTransaction.id, equals(transaction.id));
+      expect(copiedTransaction.userId, equals(transaction.userId));
+      expect(copiedTransaction.name, equals('Updated Groceries'));
+      expect(copiedTransaction.type, equals(transaction.type));
+      expect(copiedTransaction.spendingPlan, equals(transaction.spendingPlan));
+      expect(copiedTransaction.category, equals(transaction.category));
+      expect(copiedTransaction.amount, equals(250.0));
+      expect(copiedTransaction.date, equals(transaction.date));
+    });
   });
 }

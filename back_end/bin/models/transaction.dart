@@ -64,4 +64,25 @@ class Transaction {
         'amount': amount,
         'date': date.toIso8601String(),
       };
+  Transaction copyWith({
+    String? id,
+    String? userId,
+    String? name,
+    String? type,
+    String? spendingPlan,
+    String? category,
+    double? amount,
+    DateTime? date,
+  }) {
+    return Transaction(
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      name: name ?? this.name,
+      type: type ?? this.type,
+      spendingPlan: spendingPlan ?? this.spendingPlan,
+      category: category ?? this.category,
+      amount: amount ?? this.amount,
+      date: date ?? this.date,
+    );
+  }
 }
