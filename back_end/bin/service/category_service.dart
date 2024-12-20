@@ -34,6 +34,7 @@ class CategoryService with Service {
       {'name': 'Entertainment', 'icon': '🎮', 'color': '#F39C12'},
       {'name': 'Charity', 'icon': '💝', 'color': '#D35400'},
       {'name': 'Debt', 'icon': '💳', 'color': '#34495E'},
+      {'name': 'Salary', 'icon': '💵', 'color': '#28a745'},
     ];
 
     for (var category in defaultCategories) {
@@ -50,7 +51,7 @@ class CategoryService with Service {
   /// Validate category limit
   Future<void> validateCategoryLimit(String userId) async {
     final categories = await _categoryStore.fetchWhere('userId', userId);
-    if (categories.length >= 10) {
+    if (categories.length >= 20) {
       throw Exception(
           'You can only have up to 10 categories. Please delete an existing one.');
     }

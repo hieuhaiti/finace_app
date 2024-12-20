@@ -33,24 +33,18 @@ class Transaction {
   }
 
   factory Transaction.fromJson(Map<String, dynamic> json) {
-    if (json['id'] == null ||
-        json['userId'] == null ||
-        json['name'] == null ||
-        json['type'] == null ||
-        json['category'] == null ||
-        json['amount'] == null ||
-        json['date'] == null) {
-      throw ArgumentError('Missing required fields in Transaction JSON');
-    }
     return Transaction(
-      id: json['id'],
+      id: json['id'] ?? DateTime.now().millisecondsSinceEpoch.toString(),
       userId: json['userId'],
       name: json['name'],
       type: json['type'],
       spendingPlan: json['spendingPlan'],
       category: json['category'],
-      amount: json['amount'].toDouble(),
-      date: DateTime.parse(json['date']),
+      amount: (json['amount'] is String)
+          ? double.parse(json['amount'])
+          : json['amount'].toDouble(),
+      date:
+          json['date'] != null ? DateTime.parse(json['date']) : DateTime.now(),
     );
   }
 

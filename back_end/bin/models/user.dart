@@ -12,20 +12,14 @@ class User {
   }) : id = id ?? Uuid().v4();
 
   factory User.fromJson(Map<String, dynamic> json) {
-    if (json['id'] == null ||
-        json['username'] == null ||
-        json['password'] == null) {
-      throw ArgumentError('Missing required fields in User JSON');
-    }
     return User(
-      id: json['id'],
+      id: json['id'] ?? Uuid().v4(),
       username: json['username'],
       password: json['password'],
     );
   }
 
-
-Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         'id': id,
         'username': username,
         'password': password,

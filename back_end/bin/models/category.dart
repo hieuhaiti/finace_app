@@ -1,5 +1,4 @@
 class Category {
-  static int _idCounter = 1;
   final String id;
   final String userId;
   final String name;
@@ -12,7 +11,7 @@ class Category {
       required this.name,
       required this.icon,
       required this.color})
-      : id = id ?? (_idCounter++).toString();
+      : id = id ?? DateTime.now().millisecondsSinceEpoch.toString();
 
   factory Category.fromJson(Map<String, dynamic> json) {
     if (json['userId'] == null ||
@@ -22,7 +21,7 @@ class Category {
       throw ArgumentError('Missing required fields in Category JSON');
     }
     return Category(
-      id: json['id'] ?? (_idCounter++).toString(),
+      id: json['id'] ?? DateTime.now().millisecondsSinceEpoch.toString(),
       userId: json['userId'],
       name: json['name'],
       icon: json['icon'],
