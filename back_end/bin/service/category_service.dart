@@ -104,6 +104,14 @@ class CategoryService with Service {
   Future<Response> getCategoriesHandler(Request request, String userId) async {
     try {
       final categories = await _categoryStore.fetchWhere('userId', userId);
+      if (categories.isEmpty) {
+        await initializeDefaultCategories(userId);
+        return Response.ok(
+            jsonEncode({
+              'message': 'Initialized default category.',
+            }),
+            headers: _headers);
+      }
       final categoryList = categories.map((c) => c.toJson()).toList();
       return Response.ok(jsonEncode(categoryList), headers: _headers);
     } catch (e) {

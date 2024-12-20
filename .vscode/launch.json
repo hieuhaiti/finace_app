@@ -15,7 +15,8 @@
             "name": "front_end",
             "cwd": "front_end",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "program": "lib/main.dart"
         },
         {
             "name": "Flutter Web (Edge)",
