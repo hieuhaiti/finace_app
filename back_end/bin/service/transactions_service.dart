@@ -96,6 +96,7 @@ class TransactionsService with Service {
   }
 
   /// Aggregate transactions by a given key (category, spending plan, type)
+  /// descending order by time e.g 12/2024, 11/2024, 10/2024, ...
   Future<Response> getTransactionsAggregatedBy(
       Request request, String userId, String key) async {
     try {
@@ -124,25 +125,34 @@ class TransactionsService with Service {
         monthData[aggregationKey]['totalSpending'] += transaction.amount;
       }
 
-      final details = groupedByYear.entries
-          .map((yearEntry) => {
-                'year': yearEntry.key,
-                'yearDetail': yearEntry.value.entries
-                    .map((monthEntry) => {
-                          'month': monthEntry.key,
-                          'monthDetail': monthEntry.value.entries
-                              .map((entry) => {
-                                    key: entry.key,
-                                    'totalSpending':
-                                        entry.value['totalSpending'],
-                                    'transactions': entry.value['transactions']
-                                  })
-                              .toList()
-                        })
-                    .toList()
-              })
-          .toList();
+      // Sắp xếp details theo thứ tự giảm dần năm và tháng
+      final sortedDetails = groupedByYear.entries.toList();
+      sortedDetails
+          .sort((a, b) => b.key.compareTo(a.key)); // Sắp xếp năm giảm dần
 
+      final details = sortedDetails.map((yearEntry) {
+        final sortedMonths = yearEntry.value.entries.toList();
+        sortedMonths
+            .sort((a, b) => b.key.compareTo(a.key)); // Sắp xếp tháng giảm dần
+
+        return {
+          'year': yearEntry.key,
+          'yearDetail': sortedMonths.map((monthEntry) {
+            return {
+              'month': monthEntry.key,
+              'monthDetail': monthEntry.value.entries.map((entry) {
+                return {
+                  key: entry.key,
+                  'totalSpending': entry.value['totalSpending'],
+                  'transactions': entry.value['transactions'],
+                };
+              }).toList(),
+            };
+          }).toList(),
+        };
+      }).toList();
+
+      // Sắp xếp totals và averages theo giá trị giảm dần
       final totals = transactions.fold(<String, double>{}, (map, t) {
         final aggregationKey = key == 'category'
             ? t.category
@@ -153,12 +163,18 @@ class TransactionsService with Service {
         return map;
       });
 
-      final averages = totals
+      final sortedTotals = Map.fromEntries(
+          totals.entries.toList()..sort((a, b) => b.value.compareTo(a.value)));
+
+      final averages = sortedTotals
           .map((key, value) => MapEntry(key, value / groupedByYear.length));
 
       return Response.ok(
-          jsonEncode(
-              {'totals': totals, 'averages': averages, 'details': details}),
+          jsonEncode({
+            'totals': sortedTotals,
+            'averages': averages,
+            'details': details
+          }),
           headers: _headers);
     } catch (e) {
       return Response.internalServerError(
