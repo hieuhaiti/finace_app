@@ -4,26 +4,26 @@ import '../../bin/models/spending_plan.dart';
 
 void main() {
   group('Transaction Model Tests', () {
-    test('should create a valid income transaction without spendingPlan', () {
+    test('should create a valid Income transaction without spendingPlan', () {
       final transaction = Transaction(
         userId: 'user123',
         name: 'Salary',
-        type: 'income',
+        type: 'Income',
         category: 'Work',
         amount: 5000.0,
         date: DateTime.now(),
       );
 
-      expect(transaction.type, 'income');
+      expect(transaction.type, 'Income');
       expect(transaction.spendingPlan, isNull);
     });
 
-    test('should throw error if income transaction has a spendingPlan', () {
+    test('should throw error if Income transaction has a spendingPlan', () {
       expect(
         () => Transaction(
           userId: 'user123',
           name: 'Bonus',
-          type: 'income',
+          type: 'Income',
           spendingPlan: 'saving',
           category: 'Bonus',
           amount: 1000.0,

@@ -23,11 +23,11 @@ class Transaction {
   }
 
   void _validateTransaction() {
-    if (type == 'income' && spendingPlan != null) {
+    if (type == 'Income' && spendingPlan != null) {
       throw ArgumentError(
           'Income transactions should not have a spending plan.');
     }
-    if (type == 'outcome' && spendingPlan == null) {
+    if (type == 'Outcome' && spendingPlan == null) {
       throw ArgumentError('Outcome transactions must include a spending plan.');
     }
   }
