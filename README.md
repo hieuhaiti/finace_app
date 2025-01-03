@@ -84,60 +84,60 @@ Lấy chi tiết kế hoạch chi tiêu theo loại.
 ### 2. Client
 #### User
 - ##### sign in
-![alt text](sign_in.png)
+/n![alt text](sign_in.png)/n
 - ##### sign up
-![alt text](sign_up.png)
+/n![alt text](sign_up.png)/n
 #### Dash board Tab
-![alt text](dash_board.png)
+/n![alt text](dash_board.png)/n
 - ##### Total Budget
 dùng để theo dõi tổng kết tỉ lệ outcome / income trong tháng
- ![alt text](total_budget.png)
+ /n![alt text](total_budget.png)/n
 - ##### Spending Plan
 dùng để theo dõi tổng kết số dư của plan và tỉ lệ outcome / income trong tháng
-![alt text](spending_plan.png)
+/n![alt text](spending_plan.png)/n
 - ##### Category Board
 hiện thị top category chi tiêu
-![alt text](category_board.png)
+/n![alt text](category_board.png)/n
 #### Spending Plan Tab
-![alt text](spending_plan_tab.png)
+/n![alt text](spending_plan_tab.png)/n
 - ##### Spending Plan Card
 các card có thể trượt sang để xem các plan chi tiêu khác
 theo dõi tổng số dư và tỉ lệ outcome / income trong tháng
-![alt text](spending_plan_card.png)
-![alt text](spending_plan_card1.png)
-![alt text](spending_plan_card2.png)
+/n![alt text](spending_plan_card.png)/n
+/n![alt text](spending_plan_card1.png)/n
+/n![alt text](spending_plan_card2.png)/n
 khi ấn hiện thị tỉ lệ giữa các plan
-![alt text](spending_modal.png)
+/n![alt text](spending_modal.png)/n
 - ##### Spending Plan Chart
 các biểu đồ có thể trượt sang để xem các option filter chi tiêu khác
 theo dõi tỉ lệ tăng giảm giữa các tháng
-![alt text](spending_plan_chart.png)
-![alt text](spending_plan_chart1.png)
-![alt text](spending_plan_chart2.png)
+/n![alt text](spending_plan_chart.png)/n
+/n![alt text](spending_plan_chart1.png)/n
+/n![alt text](spending_plan_chart2.png)/n
 *Chức năng cho phép người dùng có thể lọc biểu đồ theo tháng đang được phát triển.*
 - ##### Spending Plan Detail
-![alt text](spending_plan_detail.png)
+/n![alt text](spending_plan_detail.png)/n
 *Chức năng cho phép người dùng có thể lọc các giao dịch theo khoảng thời gian đang được phát triển*
 #### Category Tab
-![alt text](category_tab.png)
+/n![alt text](category_tab.png)/n
 - ##### Category Chart
 hiện thị biểu đồ top 4 các category được chi tiêu nhiều nhất trong tháng
-![alt text](category_chart.png)
+/n![alt text](category_chart.png)/n
 *Chức năng cho phép người dùng có thể lọc biểu đồ theo top category thay vì 4 category cố định đang được phát triển.*
 - ##### Category Detail
 hiện thị các category được chi tiêu từ cao đến thấp trong tháng
-![alt text](category_detail.png)
+/n![alt text](category_detail.png)/n
 *Chức năng cho phép người dùng có thể các giao dịch theo category được nhấn vào đang được phát triển.*
 #### User Tab
-![alt text](user_tab.png)
+/n![alt text](user_tab.png)/n
 chức năng chính để người dùng đổi mật khẩu
 
 #### Chức năng thêm giao dịch
-![alt text](add_transaction.png)
+/n![alt text](add_transaction.png)/n
 *Chức năng cho phép người dùng có thể chuyển nguồn tiền từ các plan đang được phát triển.*
 
 #### Chức năng sửa hoặc xóa giao dịch
-![alt text](add_transaction.png)
+/n![alt text](add_transaction.png)/n
 
 ## Liên hệ
 - Email: your.email@example.com
