@@ -34,52 +34,52 @@ Trả về thông tin cơ bản của API<br>
 Đăng ký người dùng mới.<br>
 - POST /api/v1/users/signin<br>
 Đăng nhập người dùng.<br>
-- GET /api/v1/users/<userId><br>
+- GET /api/v1/users/userId<br>
 Lấy thông tin người dùng theo ID.<br>
-- GET /api/v1/users/username/<username><br>
+- GET /api/v1/users/username/username<br>
 Lấy thông tin người dùng theo tên đăng nhập.<br>
-- PUT /api/v1/users/<userId><br>
+- PUT /api/v1/users/userId<br>
 Cập nhật thông tin người dùng.<br>
-- DELETE /api/v1/users/<userId><br>
+- DELETE /api/v1/users/userId<br>
 Xóa người dùng.<br>
 #### Transaction Routes
-- GET /api/v1/transactions/<userId><br>
+- GET /api/v1/transactions/userId<br>
 Lấy tất cả giao dịch của người dùng.<br>
-- GET /api/v1/transaction/<transactionId><br>
+- GET /api/v1/transaction/transactionId<br>
 Lấy thông tin giao dịch cụ thể theo ID.<br>
 - POST /api/v1/transaction<br><br>
 Tạo mới giao dịch.<br>
-- PUT /api/v1/transaction/<transactionId><br>
+- PUT /api/v1/transaction/transactionId<br>
 Cập nhật giao dịch.<br>
-- DELETE /api/v1/transaction/<transactionId><br>
+- DELETE /api/v1/transaction/transactionId<br>
 Xóa giao dịch.<br>
-- GET /api/v1/transactions/<userId>/aggregate/<key><br>
+- GET /api/v1/transactions/userId/aggregate/key<br>
 Tổng hợp giao dịch theo một tiêu chí (vd: loại giao dịch).<br>
-- GET /api/v1/transactions/<userId>/aggregate/<key>/<month>/<year><br>
+- GET /api/v1/transactions/userId/aggregate/key/month/year<br>
 Tổng hợp giao dịch theo tháng<br>ăm.<br>
 
 #### Spending Plan Routes
-- GET /api/v1/spending-plans/<userId><br>
+- GET /api/v1/spending-plans/userId<br>
 Lấy tất cả kế hoạch chi tiêu của người dùng.<br>
-- POST /api/v1/spending-plans/<userId><br>
+- POST /api/v1/spending-plans/userId<br>
 Tạo hoặc cập nhật kế hoạch chi tiêu.<br>
-- DELETE /api/v1/spending-plans/<userId>/<spentPlan><br>
+- DELETE /api/v1/spending-plans/userId/spentPlan<br>
 Xóa kế hoạch chi tiêu.<br>
 #### Dashboard Routes
-- GET /api/v1/dashBoard/<userId><br>etworth/current<br>
+- GET /api/v1/dashBoard/userId<br>etworth/current<br>
 Lấy giá trị tài sản ròng hiện tại.<br>
-- GET /api/v1/dashBoard/<userId><br>etworth/detail<br>
+- GET /api/v1/dashBoard/userId<br>etworth/detail<br>
 Lấy chi tiết tài sản ròng.<br>
-- GET /api/v1/dashBoard/<userId>/category/current/<numberOfCategory><br>
+- GET /api/v1/dashBoard/userId/category/current/numberOfCategory<br>
 Lấy danh mục chi tiêu hiện tại.<br>
-- GET /api/v1/dashBoard/<userId>/category/detail<br>
+- GET /api/v1/dashBoard/userId/category/detail<br>
 Lấy chi tiết danh mục chi tiêu.<br>
-- GET /api/v1/dashBoard/<userId>/spending-plant/current<br>
+- GET /api/v1/dashBoard/userId/spending-plant/current<br>
 Lấy thông tin kế hoạch chi tiêu hiện tại.<br>
-- GET /api/v1/dashBoard/<userId>/spending-plant/detail/<spentPlan><br>
+- GET /api/v1/dashBoard/userId/spending-plant/detail/spentPlan<br>
 Lấy chi tiết kế hoạch chi tiêu.<br>
 #### Spending Plan Details
-- GET /api/v1/spending-plans/<userId>/<spentPlan>/<type><br>
+- GET /api/v1/spending-plans/userId/spentPlan/type<br>
 Lấy chi tiết kế hoạch chi tiêu theo loại.<br>
 ### 2. Client
 #### User
