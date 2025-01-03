@@ -1,4 +1,4 @@
-# Finance App
+![image](https://github.com/user-attachments/assets/52a8d1a1-82ab-4c54-ad7f-46c625b22ee6)# Finance App
 
 ## Mô tả
 Ứng dụng Flutter quản lý tài chính cá nhân, giúp người dùng:
@@ -24,8 +24,9 @@ cd front_end
 flutter pub get
 ```
 ## Chức năng
+### video demo:
+https://youtu.be/vAKzBxFgXZw
 ### 1. Server
-
 #### General Routes
 - GET / <br>
 Trả về thông tin cơ bản của API<br>
