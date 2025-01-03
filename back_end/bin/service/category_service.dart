@@ -1,40 +1,29 @@
 import 'dart:convert';
 import 'package:shelf/shelf.dart';
 import '../service/service.dart';
-import '../data/json_storage.dart';
 import '../models/category.dart';
-
-class CategoryJsonStorage extends JsonStorage<Category> {
-  @override
-  CategoryJsonStorage() : super('bin/data/json/categories.json');
-
-  @override
-  Category fromJson(Map<String, dynamic> json) => Category.fromJson(json);
-
-  @override
-  @override
-  Map<String, dynamic> toJson(Category object) => object.toJson();
-}
+import '../data/category_storage.dart';
 
 /// CategoryService handles all category-related operations
 class CategoryService with Service {
-  final CategoryJsonStorage _categoryStore = CategoryJsonStorage();
+  final CategoryStorage categoryStorage =
+      CategoryStorage('bin/data/json/categories.json');
   final _headers = {'Content-Type': 'application/json'};
 
   /// Initialize default categories for a user
   Future<void> initializeDefaultCategories(String userId) async {
     final defaultCategories = [
-      {'name': 'Other', 'icon': '🤷‍♂️', 'color': '#A0A0A0'},
-      {'name': 'Food', 'icon': '🍴', 'color': '#FF5733'},
-      {'name': 'Transportation', 'icon': '🚗', 'color': '#3498DB'},
-      {'name': 'Bills', 'icon': '🧾', 'color': '#FFC300'},
-      {'name': 'Rent', 'icon': '🏠', 'color': '#2ECC71'},
-      {'name': 'Clothing', 'icon': '🧥', 'color': '#9B59B6'},
-      {'name': 'Health', 'icon': '🏥', 'color': '#E74C3C'},
-      {'name': 'Entertainment', 'icon': '🎮', 'color': '#F39C12'},
-      {'name': 'Charity', 'icon': '💝', 'color': '#D35400'},
-      {'name': 'Debt', 'icon': '💳', 'color': '#34495E'},
-      {'name': 'Salary', 'icon': '💵', 'color': '#28a745'},
+      {'name': 'Other', 'icon': '🤷‍♂️', 'color': '#D3D3D3'},
+      {'name': 'Food', 'icon': '🍴', 'color': '#FF6347'},
+      {'name': 'Transportation', 'icon': '🚗', 'color': '#1E90FF'},
+      {'name': 'Bills', 'icon': '🧾', 'color': '#FFD700'},
+      {'name': 'Rent', 'icon': '🏠', 'color': '#32CD32'},
+      {'name': 'Clothing', 'icon': '🧥', 'color': '#8A2BE2'},
+      {'name': 'Health', 'icon': '🏥', 'color': '#FF4500'},
+      {'name': 'Entertainment', 'icon': '🎮', 'color': '#FFA500'},
+      {'name': 'Charity', 'icon': '💝', 'color': '#FF8C00'},
+      {'name': 'Debt', 'icon': '💳', 'color': '#2F4F4F'},
+      {'name': 'Salary', 'icon': '💵', 'color': '#3CB371'},
     ];
 
     for (var category in defaultCategories) {
@@ -44,13 +33,13 @@ class CategoryService with Service {
         icon: category['icon']!,
         color: category['color']!,
       );
-      await _categoryStore.save(newCategory.id, newCategory);
+      await categoryStorage.save(newCategory.id, newCategory);
     }
   }
 
   /// Validate category limit
   Future<void> validateCategoryLimit(String userId) async {
-    final categories = await _categoryStore.fetchWhere('userId', userId);
+    final categories = await categoryStorage.fetchWhere('userId', userId);
     if (categories.length >= 20) {
       throw Exception(
           'You can only have up to 10 categories. Please delete an existing one.');
@@ -67,7 +56,7 @@ class CategoryService with Service {
 
       // Lấy tất cả các danh mục của user
       final existingCategories =
-          await _categoryStore.fetchWhere('userId', category.userId);
+          await categoryStorage.fetchWhere('userId', category.userId);
 
       // Kiểm tra trùng lặp tên
       final isDuplicate =
@@ -83,7 +72,7 @@ class CategoryService with Service {
         );
       }
 
-      await _categoryStore.save(category.id, category);
+      await categoryStorage.save(category.id, category);
       return Response.ok(
           jsonEncode({
             'message': 'Category saved successfully',
@@ -104,7 +93,7 @@ class CategoryService with Service {
   /// Get all categories by user ID
   Future<Response> getCategoriesHandler(Request request, String userId) async {
     try {
-      final categories = await _categoryStore.fetchWhere('userId', userId);
+      final categories = await categoryStorage.fetchWhere('userId', userId);
       if (categories.isEmpty) {
         await initializeDefaultCategories(userId);
         return Response.ok(
@@ -125,7 +114,7 @@ class CategoryService with Service {
   Future<Response> getCategoriesDetailHandler(
       Request request, String categoryId) async {
     try {
-      final category = await _categoryStore.fetchById(categoryId);
+      final category = await categoryStorage.fetchById(categoryId);
       if (category == null) {
         return Response.notFound('Category not found', headers: _headers);
       }
@@ -144,7 +133,7 @@ class CategoryService with Service {
       final updates = await parseRequestBody(request);
 
       // Kiểm tra danh mục có tồn tại không
-      final existingCategory = await _categoryStore.fetchById(categoryId);
+      final existingCategory = await categoryStorage.fetchById(categoryId);
       if (existingCategory == null) {
         return Response.notFound('Category not found', headers: _headers);
       }
@@ -159,7 +148,7 @@ class CategoryService with Service {
       );
 
       // Lưu danh mục đã cập nhật
-      await _categoryStore.save(categoryId, updatedCategory);
+      await categoryStorage.save(categoryId, updatedCategory);
 
       return Response.ok(
           jsonEncode({'message': 'Category updated successfully'}),
@@ -174,7 +163,7 @@ class CategoryService with Service {
   Future<Response> deleteCategoryHandler(
       Request request, String categoryId) async {
     try {
-      await _categoryStore.delete(categoryId);
+      await categoryStorage.delete(categoryId);
       return Response.ok(
           jsonEncode({'message': 'Category deleted successfully'}),
           headers: _headers);

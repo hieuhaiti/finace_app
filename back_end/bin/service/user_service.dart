@@ -1,23 +1,14 @@
 import 'dart:convert';
 import 'package:shelf/shelf.dart';
-import '../data/json_storage.dart';
 import '../models/user.dart';
 import 'service.dart';
+import '../data/user_storage.dart';
 
 /// Lớp lưu trữ User
-class UserJsonStorage extends JsonStorage<User> {
-  UserJsonStorage() : super('bin/data/json/users.json');
-
-  @override
-  User fromJson(Map<String, dynamic> json) => User.fromJson(json);
-
-  @override
-  Map<String, dynamic> toJson(User object) => object.toJson();
-}
 
 /// Lớp xử lý User
 class UserService with Service {
-  final UserJsonStorage _userStorage = UserJsonStorage();
+  final UserStorage userStorage = UserStorage('bin/data/json/users.json');
   final _headers = {'Content-Type': 'application/json'};
 
   /// Xử lý đăng ký người dùng
@@ -34,14 +25,14 @@ class UserService with Service {
             body: 'Username and password are required', headers: _headers);
       }
 
-      final existingUsers = await _userStorage.fetchWhere('username', username);
+      final existingUsers = await userStorage.fetchWhere('username', username);
       if (existingUsers.isNotEmpty) {
         return Response(409,
             body: 'Username already exists', headers: _headers);
       }
 
       final newUser = User(username: username, password: password);
-      await _userStorage.save(newUser.id, newUser);
+      await userStorage.save(newUser.id, newUser);
 
       return Response.ok(
           jsonEncode({
@@ -69,7 +60,7 @@ class UserService with Service {
             body: 'Username and password are required', headers: _headers);
       }
 
-      final users = await _userStorage.fetchWhere('username', username);
+      final users = await userStorage.fetchWhere('username', username);
       if (users.isEmpty || users.first.password != password) {
         return Response(401,
             body: 'Invalid username or password', headers: _headers);
@@ -90,7 +81,7 @@ class UserService with Service {
   /// Lấy thông tin người dùng theo ID
   Future<Response> getUserByIdHandler(Request request, String userId) async {
     try {
-      final user = await _userStorage.fetchById(userId);
+      final user = await userStorage.fetchById(userId);
       if (user == null) {
         return Response.notFound('User not found', headers: _headers);
       }
@@ -106,7 +97,7 @@ class UserService with Service {
   Future<Response> getUserByUsernameHandler(
       Request request, String username) async {
     try {
-      final users = await _userStorage.fetchWhere('username', username);
+      final users = await userStorage.fetchWhere('username', username);
       if (users.isEmpty) {
         return Response.notFound('User not found', headers: _headers);
       }
@@ -124,7 +115,7 @@ class UserService with Service {
       final updates = await request.readAsString();
       final data = jsonDecode(updates) as Map<String, dynamic>;
 
-      final existingUser = await _userStorage.fetchById(userId);
+      final existingUser = await userStorage.fetchById(userId);
       if (existingUser == null) {
         return Response.notFound('User not found', headers: _headers);
       }
@@ -135,7 +126,7 @@ class UserService with Service {
         password: data['password'] ?? existingUser.password,
       );
 
-      await _userStorage.save(userId, updatedUser);
+      await userStorage.save(userId, updatedUser);
 
       return Response.ok(jsonEncode({'message': 'User updated successfully'}),
           headers: _headers);
@@ -148,7 +139,7 @@ class UserService with Service {
   /// Xóa người dùng
   Future<Response> deleteUserHandler(Request request, String userId) async {
     try {
-      await _userStorage.delete(userId);
+      await userStorage.delete(userId);
       return Response.ok(jsonEncode({'message': 'User deleted successfully'}),
           headers: _headers);
     } catch (e) {

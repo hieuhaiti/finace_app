@@ -122,8 +122,8 @@ class Transaction {
   final String id;
   final String userId;
   final String name;
-  final String type; // 'income' or 'outcome'
-  final String? spendingPlan; // Optional, for 'outcome'
+  final String type; // 'Income' or 'Outcome'
+  final String? spendingPlan; // Optional, for 'Outcome'
   final String category;
   final double amount;
   final DateTime date;

@@ -1,6 +1,6 @@
 class SpendingPlan {
   final String userId;
-  final Map<String, int> categories;
+  final Map<String, Map<String, double>> categories;
 
   SpendingPlan({
     required this.userId,
@@ -14,12 +14,14 @@ class SpendingPlan {
       throw ArgumentError('SpendingPlan must have at least one category.');
     }
 
-    final total = categories.values.reduce((a, b) => a + b);
+    final total = categories.values
+        .map((value) => value['ratio']!)
+        .reduce((a, b) => a + b);
     if (total != 100) {
       throw ArgumentError('Category percentages must sum to 100.');
     }
 
-    if (categories.values.any((value) => value < 0)) {
+    if (categories.values.any((value) => value['ratio']! < 0)) {
       throw ArgumentError('Category percentages cannot be negative.');
     }
   }
@@ -30,10 +32,16 @@ class SpendingPlan {
     }
     return SpendingPlan(
       userId: json['userId'],
-      categories: Map<String, int>.from(json['categories']),
+      categories: (json['categories'] as Map<String, dynamic>).map(
+        (key, value) => MapEntry(
+          key,
+          (value as Map<String, dynamic>).map(
+            (k, v) => MapEntry(k, v.toDouble()),
+          ),
+        ),
+      ),
     );
   }
-
   Map<String, dynamic> toJson() => {
         'userId': userId,
         'categories': categories,
