@@ -47,7 +47,7 @@ Xóa người dùng.<br>
 Lấy tất cả giao dịch của người dùng.<br>
 - GET /api/v1/transaction/transactionId<br>
 Lấy thông tin giao dịch cụ thể theo ID.<br>
-- POST /api/v1/transaction<br><br>
+- POST /api/v1/transaction<br>
 Tạo mới giao dịch.<br>
 - PUT /api/v1/transaction/transactionId<br>
 Cập nhật giao dịch.<br>
