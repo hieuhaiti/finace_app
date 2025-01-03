@@ -4,13 +4,12 @@ import '../models/spending_plan.dart';
 import 'service.dart';
 import '../data/spending_plan_storage.dart';
 import '../data/user_storage.dart';
-import '../data/transaction_storage.dart';
 import '../data/category_storage.dart';
+import '../data/transaction_storage.dart';
 import 'dart:collection';
 
 import '../models/user.dart';
 import '../models/transaction.dart';
-import '../models/category.dart';
 
 class SpendingPlanService with Service {
   final UserStorage userStorage = UserStorage('bin/data/json/users.json');

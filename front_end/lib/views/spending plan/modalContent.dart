@@ -43,7 +43,7 @@ class _ModalContentState extends State<ModalContent> {
   }
 
   void _onChartSelectionChanged(SelectionArgs args) {
-    final selectedData = widget.chartData[args.pointIndex!];
+    final selectedData = widget.chartData[args.pointIndex];
 
     setState(() {
       if (_selectedPlanName == selectedData.x) {
