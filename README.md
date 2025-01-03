@@ -137,7 +137,7 @@ chức năng chính để người dùng đổi mật khẩu
 *Chức năng cho phép người dùng có thể chuyển nguồn tiền từ các plan đang được phát triển.*
 
 #### Chức năng sửa hoặc xóa giao dịch
-<br>![alt text](add_transaction.png)<br>
+<br>![alt text](manage_transaction.png)<br>
 
 ## Liên hệ
 - Email: your.email@example.com
