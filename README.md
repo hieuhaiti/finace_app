@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/52a8d1a1-82ab-4c54-ad7f-46c625b22ee6)# Finance App
+# Finance App
 
 ## Mô tả
 Ứng dụng Flutter quản lý tài chính cá nhân, giúp người dùng:
